@@ -1,6 +1,6 @@
 package functions;
 
-class FunctionPoint{
+public class FunctionPoint{
     private double x;
     private double y;
 

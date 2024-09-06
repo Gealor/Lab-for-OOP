@@ -1,6 +1,6 @@
 package functions;
 
-class TabulatedFunction{
+public class TabulatedFunction{
     private FunctionPoint[] points;
     
 
@@ -140,9 +140,32 @@ class TabulatedFunction{
         if (count <= 2) {
             throw new IllegalStateException("Cannot delete point. At least two points must remain.");
         }
+        FunctionPoint[] newPoints = new FunctionPoint[getPointsCount()-1];
         // Копирую элементы массива, начиная с точки index + 1, на позицию index, тем самым сдвигая все элементы влево и удаляя элемент на позиции index.
-        System.arraycopy(points, index + 1, points, index, count - index - 1);
-        points[--count] = null;
+        System.arraycopy(points, 0, newPoints, 0, count - index);
+        System.arraycopy(points, index + 1, newPoints, index, count - index - 1);
+        this.points = newPoints;
+    }
+
+    // Метод для добавления точки
+    public void addPoint(FunctionPoint point) {
+        if (points.length > 0) {
+            if (point.getX() <= points[0].getX() || point.getX() >= points[points.length - 1].getX()) {
+                throw new IllegalArgumentException("Point x-coordinate must be within existing points' x-range.");
+            }
+        }
+        FunctionPoint[] newPoints = new FunctionPoint[getPointsCount() + 1];
+        int i = 0;
+        while (i < points.length && points[i].getX() < point.getX()) {
+            newPoints[i] = points[i];
+            i++;
+        }
+        newPoints[i] = point;
+        while (i < points.length) {
+            newPoints[i + 1] = points[i];
+            i++;
+        }
+        this.points = newPoints;
     }
 }
 
