@@ -148,8 +148,9 @@ public class TabulatedFunction{
             throw new IllegalStateException("Cannot delete point. At least two points must remain.");
         }
         FunctionPoint[] newPoints = new FunctionPoint[getPointsCount()-1];
+        // Копирую первые элементы массива до элемента, который необходимо удалить
+        System.arraycopy(points, 0, newPoints, 0, index);
         // Копирую элементы массива, начиная с точки index + 1, на позицию index, тем самым сдвигая все элементы влево и удаляя элемент на позиции index.
-        System.arraycopy(points, 0, newPoints, 0, count - index);
         System.arraycopy(points, index + 1, newPoints, index, count - index - 1);
         this.points = newPoints;
     }
