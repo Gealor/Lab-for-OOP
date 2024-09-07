@@ -90,7 +90,7 @@ public class TabulatedFunction{
     // Метод для замены точки по индексу
     public void setPoint(int index, FunctionPoint point) {
         if (index < 0 || index >= points.length) {
-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+            throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
         }
 
         // Проверяю точку, чтобы она соответствовала порядку точек в массиве
