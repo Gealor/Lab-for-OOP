@@ -2,7 +2,6 @@ package functions;
 
 public class TabulatedFunction{
     private FunctionPoint[] points;
-    
 
     // Конструктор, создающий табулированную функцию с заданным количеством точек
     public TabulatedFunction(double leftX, double rightX, int pointsCount) {
@@ -83,7 +82,7 @@ public class TabulatedFunction{
     // Метод для получения точки по индексу
     public FunctionPoint getPoint(int index) {
         if (index < 0 || index >= points.length) {
-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+            throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
         }
         return points[index];
     }
@@ -97,36 +96,44 @@ public class TabulatedFunction{
         // Проверяю точку, чтобы она соответствовала порядку точек в массиве
         if (index > 0 && point.getX() <= points[index - 1].getX() ||
             index < points.length - 1 && point.getX() >= points[index + 1].getX()) {
-            throw new IllegalArgumentException("Invalid x coordinate: " + point.getX());
+            throw new InappropriateFunctionPointException("Invalid x coordinate: " + point.getX());
         }
         points[index] = point;
     }
 
     public double getPointX(int index) {
+        if (index < 0 || index >= points.length) {
+            throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
+        }
         return getPoint(index).getX();
     }
+
 
     // Метод для установки значения x точки по индексу
     public void setPointX(int index, double x) {
         if (index < 0 || index >= points.length) {
-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+            throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
         }
         if (index > 0 && x <= points[index - 1].getX() ||
             index < points.length - 1 && x >= points[index + 1].getX()) {
-            throw new IllegalArgumentException("Invalid x coordinate: " + x);
+            throw new InappropriateFunctionPointException("Invalid x coordinate: " + x);
         }
         points[index].setX(x);
     }
 
     // Метод для получения значения y точки по индексу
     public double getPointY(int index) {
+        if (index < 0 || index >= points.length) {
+            throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
+        }
         return getPoint(index).getY();
     }
 
+    
     // Метод для установки значения y точки по индексу
     public void setPointY(int index, double y) {
         if (index < 0 || index >= points.length) {
-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+            throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
         }
         points[index].setY(y);
     }
@@ -135,7 +142,7 @@ public class TabulatedFunction{
     public void deletePoint(int index) {
         int count = getPointsCount();
         if (index < 0 || index >= points.length) {
-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+            throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
         }
         if (count <= 2) {
             throw new IllegalStateException("Cannot delete point. At least two points must remain.");
@@ -151,7 +158,7 @@ public class TabulatedFunction{
     public void addPoint(FunctionPoint point) {
         if (points.length > 0) {
             if (point.getX() <= points[0].getX() || point.getX() >= points[points.length - 1].getX()) {
-                throw new IllegalArgumentException("Point x-coordinate must be within existing points' x-range.");
+                throw new InappropriateFunctionPointException("Point x-coordinate must be within existing points' x-range.");
             }
         }
         FunctionPoint[] newPoints = new FunctionPoint[getPointsCount() + 1];
