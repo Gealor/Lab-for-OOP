@@ -1,5 +1,8 @@
 package functions;
 
+import functions.exceptions.FunctionPointIndexOutOfBoundsException;
+import functions.exceptions.InappropriateFunctionPointException;
+
 public class TabulatedFunction{
     private FunctionPoint[] points;
 

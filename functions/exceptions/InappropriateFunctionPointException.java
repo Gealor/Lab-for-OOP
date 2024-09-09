@@ -1,4 +1,4 @@
-package functions;
+package functions.exceptions;
 
 public class InappropriateFunctionPointException extends IllegalArgumentException{
 

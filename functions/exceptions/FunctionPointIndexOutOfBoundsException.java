@@ -1,4 +1,4 @@
-package functions;
+package functions.exceptions;
 
 public class FunctionPointIndexOutOfBoundsException extends IndexOutOfBoundsException{
 

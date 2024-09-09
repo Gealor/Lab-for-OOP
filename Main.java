@@ -2,6 +2,7 @@ import functions.*;
 
 public class Main {
     public static void main(String[] args) {
+        // y = 2x
         double[] yValues = {-8.0, -6.0, -4.0, -2.0, 0.0, 2.0, 4.0, 6.0 ,8.0};
         TabulatedFunction tf = new TabulatedFunction(-4.0, 4.0, yValues);
         for (FunctionPoint point : tf.getPoints()){
@@ -38,5 +39,6 @@ public class Main {
             System.out.println(point.getX() + " : " + point.getY());
         }
         System.out.println("Count of dots: " + tf.getPointsCount());
+
     }
 }
