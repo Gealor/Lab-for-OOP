@@ -1,6 +1,6 @@
 package functions.exceptions;
 
-public class InappropriateFunctionPointException extends IllegalArgumentException{
+public class InappropriateFunctionPointException extends Exception{
 
     public InappropriateFunctionPointException(){
         super();

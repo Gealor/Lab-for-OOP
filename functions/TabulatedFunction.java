@@ -91,7 +91,7 @@ public class TabulatedFunction{
     }
 
     // Метод для замены точки по индексу
-    public void setPoint(int index, FunctionPoint point) {
+    public void setPoint(int index, FunctionPoint point) throws InappropriateFunctionPointException{
         if (index < 0 || index >= points.length) {
             throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
         }
@@ -113,7 +113,7 @@ public class TabulatedFunction{
 
 
     // Метод для установки значения x точки по индексу
-    public void setPointX(int index, double x) {
+    public void setPointX(int index, double x) throws InappropriateFunctionPointException{
         if (index < 0 || index >= points.length) {
             throw new FunctionPointIndexOutOfBoundsException("Invalid index: " + index);
         }
@@ -159,7 +159,7 @@ public class TabulatedFunction{
     }
 
     // Метод для добавления точки
-    public void addPoint(FunctionPoint point) {
+    public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException{
         if (points.length > 0) {
             if (point.getX() <= points[0].getX() || point.getX() >= points[points.length - 1].getX()) {
                 throw new InappropriateFunctionPointException("Point x-coordinate must be within existing points' x-range.");

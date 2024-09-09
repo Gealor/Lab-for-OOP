@@ -1,4 +1,5 @@
 import functions.*;
+import functions.exceptions.InappropriateFunctionPointException;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,7 +20,12 @@ public class Main {
             System.out.println("Dot with getPoint method : " + "( " + point.getX() + " : " + point.getY() + " )");
         }
 
-        tf.setPoint(4, new FunctionPoint(-0.5,0));
+        try{
+            tf.setPoint(4, new FunctionPoint(-0.5,0));
+        } catch (InappropriateFunctionPointException e){
+            System.out.println(e.getMessage());
+        }
+
         for (FunctionPoint point : tf.getPoints()){
             System.out.println(point.getX() + " : " + point.getY());
         }
@@ -33,8 +39,12 @@ public class Main {
         }
         System.out.println("Count of dots: " + tf.getPointsCount());
 
+        try {
+            tf.addPoint(new FunctionPoint(0,0));
+        } catch (InappropriateFunctionPointException e){
+            System.out.println(e.getMessage());
+        }
 
-        tf.addPoint(new FunctionPoint(0,0));
         for (FunctionPoint point : tf.getPoints()){
             System.out.println(point.getX() + " : " + point.getY());
         }
