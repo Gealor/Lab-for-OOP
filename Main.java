@@ -1,7 +1,9 @@
 import functions.*;
+import functions.exceptions.InappropriateFunctionPointException;
 
 public class Main {
     public static void main(String[] args) {
+        try {
         double[] yValues = {-8.0, -6.0, -4.0, -2.0, 0.0, 2.0, 4.0, 6.0 ,8.0};
         TabulatedFunction tf = new ArrayTabulatedFunction(-4.0, 4.0, yValues);
         for (FunctionPoint point : tf.getPoints()){
@@ -38,5 +40,8 @@ public class Main {
             System.out.println(point.getX() + " : " + point.getY());
         }
         System.out.println("Count of dots: " + tf.getPointsCount());
+    } catch (InappropriateFunctionPointException e){
+            e.getMessage();
+        }
     }
 }
