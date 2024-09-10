@@ -3,7 +3,7 @@ import functions.*;
 public class Main {
     public static void main(String[] args) {
         double[] yValues = {-8.0, -6.0, -4.0, -2.0, 0.0, 2.0, 4.0, 6.0 ,8.0};
-        TabulatedFunction tf = new TabulatedFunction(-4.0, 4.0, yValues);
+        TabulatedFunction tf = new ArrayTabulatedFunction(-4.0, 4.0, yValues);
         for (FunctionPoint point : tf.getPoints()){
             System.out.println(point.getX() + " : " + point.getY());
         }
