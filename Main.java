@@ -40,8 +40,6 @@ public class Main {
             System.out.println(point.getX() + " : " + point.getY());
         }
         System.out.println("Count of dots: " + tf.getPointsCount());
-    } catch (InappropriateFunctionPointException e){
-            e.getMessage();
-        }
+    } catch (InappropriateFunctionPointException e) { System.out.println("Exception" + e); }
     }
 }
