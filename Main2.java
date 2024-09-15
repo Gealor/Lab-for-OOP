@@ -27,7 +27,7 @@ public class Main2{
 
         // 2. Табулирование функций
         System.out.println("\n2. Табулирование функций");
-        TabulatedFunction tabulatedSin = TabulatedFunctions.tabulate(objSin, 0, Math.PI, 5);
+        TabulatedFunction tabulatedSin = TabulatedFunctions.tabulate(objSin, 0, Math.PI, 10);
         TabulatedFunction tabulatedCos = TabulatedFunctions.tabulate(objCos, 0, Math.PI, 10);
         System.out.println("Sin values: ");
         int countSin2 = 0;
@@ -90,6 +90,30 @@ public class Main2{
             e.printStackTrace();
         }
 
+        // Логарифм
+        System.out.println("\nЛогарифм");
+        TabulatedFunction tabulatedLog = TabulatedFunctions.tabulate(new Log(2), 1, 10, 10);
+//        for (FunctionPoint point : tabulatedLog.getPoints()){
+//            System.out.println(point.getX() + " : " + point.getY());
+//        }
+        try (OutputStream outputStream = new FileOutputStream("logFunction.bin")){
+            System.out.println("Attempting to write to file.");
+            TabulatedFunctions.outputTabulatedFunction(tabulatedLog, outputStream);
+            System.out.println("Writing completed successfully.");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try (InputStream inputStream = new FileInputStream("logFunction.bin")){
+            System.out.println("Attempting to read to file.");
+            TabulatedFunction readLog = TabulatedFunctions.inputTabulatedFunction(inputStream);
+            for (FunctionPoint point : readLog.getPoints()){
+                System.out.println(point.getX() + " : " + point.getY());
+            }
+            System.out.println("Reading completed successfully.");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
         System.out.println("End of tests");
     }
 }
