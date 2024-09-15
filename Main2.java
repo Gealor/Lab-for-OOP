@@ -27,11 +27,14 @@ public class Main2{
 
         // 2. Табулирование функций
         System.out.println("\n2. Табулирование функций");
-        TabulatedFunction tabulatedSin = TabulatedFunctions.tabulate(objSin, 0, Math.PI, 10);
+        TabulatedFunction tabulatedSin = TabulatedFunctions.tabulate(objSin, 0, Math.PI, 5);
         TabulatedFunction tabulatedCos = TabulatedFunctions.tabulate(objCos, 0, Math.PI, 10);
         System.out.println("Sin values: ");
         int countSin2 = 0;
         for (double x=0; x<=Math.PI; x+=0.1){
+            // результат отличается от предыдущего, т.к я использую TabulatedFunction(который является интерфейсом для
+            // ArrayTabulatedFunction и LinkedListTabulatedFunction), а там в методе getFunctionValue используется линейная интерполяция(т.е значение между точками,
+            // вычисляется относительно этих фиксированных точек)
             System.out.println(countSin2 + ". " + "Sin " + x + " = " + tabulatedSin.getFunctionValue(x));
             ++countSin2;
         }
