@@ -69,6 +69,7 @@ public final class TabulatedFunctions {
                 writer.write(" ");
             }
             writer.flush();
+            // тест
         }
     }
 

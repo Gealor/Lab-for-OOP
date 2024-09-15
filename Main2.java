@@ -2,6 +2,8 @@ import functions.basic.*;
 import functions.*;
 import functions.basic.TrigonometricFunction;
 
+import java.io.*;
+
 public class Main2{
     public static void main(String[] args) {
         // 1. Создание объектов синуса и косинуса и вывод их значений
@@ -58,8 +60,34 @@ public class Main2{
             System.out.println("Sum Squares " + x + " = " + tabulatedSum.getFunctionValue(x));
         }
 
+        // Экспонента
+        System.out.println("\nЭкспонента");
+        TabulatedFunction tabulatedExp = TabulatedFunctions.tabulate(new Exp(), 0, 10, 11);
+        for (FunctionPoint point : tabulatedExp.getPoints()){
+            System.out.println(point.getX() + " : " + point.getY());
+        }
+        System.out.println("Count of dots: " + tabulatedExp.getPointsCount());
 
+        try (Writer writer = new FileWriter("expFunction.txt")){
+            System.out.println("Attempting to write to file.");
+            TabulatedFunctions.writeTabulatedFunction(tabulatedExp, writer);
+            System.out.println("Writing completed successfully.");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
 
+        try (Reader reader = new FileReader("expFunction.txt")){
+            System.out.println("Attempting to read to file.");
+            TabulatedFunction readFunc = TabulatedFunctions.readTabulatedFunction(reader);
+            for (FunctionPoint point : readFunc.getPoints()){
+                System.out.println(point.getX() + " : " + point.getY());
+            }
+            System.out.println("Reading completed successfully.");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        System.out.println("End of tests");
     }
 }
 
