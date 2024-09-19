@@ -6,6 +6,7 @@ import functions.exceptions.InappropriateFunctionPointException;
 public class LinkedListTabulatedFunction implements TabulatedFunction {
     // Описываю этот класс как вложенный в LinkedListTabulatedFunction, чтобы обеспечить прямой доступ к элементам связного списка
     // но при этом обеспечить высокий уровень инкапсуляции, делая его недоступным из внешних классов
+
     private class FunctionNode {
         private FunctionPoint data;
         private FunctionNode prev;
@@ -15,6 +16,8 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         public FunctionNode(FunctionPoint data){
             this.data = data;
         }
+
+        public FunctionNode() { this.data = null; }
 
         // Геттеры и сеттеры
         public FunctionPoint getData() {
@@ -40,6 +43,12 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         public void setNext(FunctionNode next) {
             this.next = next;
         }
+
+        public void deleteNode(){
+            this.setPrev(null);
+            this.setNext(null);
+            this.setData(null);
+        }
     }
 
     private FunctionNode head;
@@ -50,6 +59,11 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         if (pointsCount < 2 || leftX >= rightX) {
             throw new IllegalArgumentException("Invalid parameters for TabulatedFunction constructor.");
         }
+
+        head = new FunctionNode(); // Инициализация головы
+        head.setNext(head);        // Ссылка next на саму голову
+        head.setPrev(head);        // Ссылка prev на саму голову
+        size = 0;
 
         double interval = (rightX - leftX) / (pointsCount - 1);
         for (int i = 0; i < pointsCount; i++) {
@@ -66,7 +80,11 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
             throw new IllegalArgumentException("Values array should contain at least 2 elements.");
         }
 
+        head = new FunctionNode(); // Инициализация головы
+        head.setNext(head);        // Ссылка next на саму голову
+        head.setPrev(head);        // Ссылка prev на саму голову
         size = 0;
+
         double interval = (rightX - leftX) / (pointsCount - 1);
 
         for (int i = 0; i < pointsCount; i++) {
@@ -79,7 +97,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
     @Override
     public FunctionPoint[] getPoints() {
         FunctionPoint[] points = new FunctionPoint[size];
-        FunctionNode current = head;
+        FunctionNode current = head.getNext();
 
         for (int i = 0; i < size; i++) {
             points[i] = current.getData();
@@ -95,7 +113,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         if (size == 0) {
             throw new IllegalStateException("The list is empty.");
         }
-        return head.getData().getX();
+        return head.getNext().getData().getX();
     }
 
     // Получение правой границы области определения
@@ -115,7 +133,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
             return Double.NaN;
         }
 
-        FunctionNode current = head;
+        FunctionNode current = head.getNext();
 
         while (current.getNext() != null) {
             double x1 = current.getData().getX();
@@ -129,7 +147,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         }
 
         // На случай, если x точно совпадает с координатой любой из точек
-        current = head;
+        current = head.getNext();
         while (current != null) {
             if (current.getData().getX() == x) {
                 return current.getData().getY();
@@ -230,7 +248,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
             if (point.getX() <= getLeftDomainBorder() || point.getX() >= getRightDomainBorder()) {
                 throw new InappropriateFunctionPointException("Point x-coordinate must be within existing points' x-range.");
             }
-            FunctionNode current = head;
+            FunctionNode current = head.getNext();
             for (int i = 0; i < size; i++) {
                 if (current.getData().getX() >= point.getX()) {
                     addNodeByIndex(i, point);
@@ -248,23 +266,31 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         if (index < 0 || index >= size) {
             throw new FunctionPointIndexOutOfBoundsException("Index out of bounds");
         }
-        FunctionNode current = head;
-        for (int i = 0; i < index; i++) {
-            current = current.getNext();
+        FunctionNode current;
+        if (index < size/2) {
+            current = head.getNext();
+            for (int i = 0; i < index; i++) {
+                current = current.getNext();
+            }
+        }
+        else {
+            current=head.getPrev();
+            for (int i = size - 1; i > index; i--) {
+                current = current.getPrev();
+            }
         }
         return current;
     }
 
     private FunctionNode addNodeToTail(FunctionPoint data) {
         FunctionNode newNode = new FunctionNode(data);
-        if (head == null) {
-            head = newNode;
-        }
-        else {
-            FunctionNode tail = getNodeByIndex(size - 1);
-            tail.setNext(newNode);
-            newNode.setPrev(tail);
-        }
+
+        FunctionNode tail = head.getPrev();
+        tail.setNext(newNode);
+        newNode.setPrev(tail);
+        newNode.setNext(head);
+        head.setPrev(newNode);
+
         size++;
         return newNode;
     }
@@ -274,22 +300,17 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
             throw new FunctionPointIndexOutOfBoundsException("Index out of bounds");
         }
         FunctionNode newNode = new FunctionNode(data);
-        if (index == 0) {
-            newNode.setNext(head);
-            if (head != null) {
-                head.setPrev(newNode);
-            }
-            head = newNode;
+        if (index == size) {
+            return addNodeToTail(data);
         }
         else {
-            FunctionNode prevNode = getNodeByIndex(index - 1);
-            FunctionNode nextNode = prevNode.getNext();
+            FunctionNode nextNode = getNodeByIndex(index);
+            FunctionNode prevNode = nextNode.getPrev();
+
             newNode.setPrev(prevNode);
             newNode.setNext(nextNode);
             prevNode.setNext(newNode);
-            if (nextNode != null) {
-                nextNode.setPrev(newNode);
-            }
+            nextNode.setPrev(newNode);
         }
         size++;
         return newNode;
@@ -303,15 +324,10 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         FunctionNode prevNode = nodeToDelete.getPrev();
         FunctionNode nextNode = nodeToDelete.getNext();
 
-        if (prevNode != null) {
-            prevNode.setNext(nextNode);
-        }
-        else {
-            head = nextNode;
-        }
-        if (nextNode != null) {
-            nextNode.setPrev(prevNode);
-        }
+        prevNode.setNext(nextNode);
+        nextNode.setPrev(prevNode);
+
+        nodeToDelete.deleteNode();
 
         size--;
         return nodeToDelete;
