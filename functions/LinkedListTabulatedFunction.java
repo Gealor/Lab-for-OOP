@@ -248,7 +248,6 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
                 throw new InappropriateFunctionPointException("Point x-coordinate must be within existing points' x-range.");
             }
             FunctionNode current = head.getNext();
-            //
             for (int i = 0; i < size; i++) {
                 if (current.getData().getX() >= point.getX()) {
                     addNodeByIndex(i, point);
