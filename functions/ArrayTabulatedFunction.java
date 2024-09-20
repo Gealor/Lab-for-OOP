@@ -210,5 +210,75 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
         }
         this.points = newPoints;
     }
+
+    @Override
+    public String toString(){
+        int size = getPointsCount();
+        String result = "{";
+        for (int i=0; i<size; i++){
+            result += points[i].toString();
+            if (i < size-1){
+                result+=", ";
+            }
+        }
+        result += "}";
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (this==obj){
+            return true;
+        }
+        if (!(obj instanceof TabulatedFunction)){
+            return false;
+        }
+        if (obj instanceof ArrayTabulatedFunction){
+            ArrayTabulatedFunction other = (ArrayTabulatedFunction) obj;
+            if (this.getPointsCount() != other.getPointsCount()){
+                return false;
+            }
+            for (int i=0; i < this.getPointsCount(); i++){
+                if (!this.points[i].equals(other.points[i])){
+                    return false;
+                }
+            }
+            return true;
+        }
+        // Общий случай для других реализаций TabulatedFunction
+        TabulatedFunction other = (TabulatedFunction) obj;
+        if (this.getPointsCount() != other.getPointsCount()){
+            return false;
+        }
+        for (int i=0; i<this.getPointsCount(); i++){
+            if (!this.getPoint(i).equals(other.getPoint(i))){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode(){
+        int bits = getPointsCount();
+        for (FunctionPoint point : this.getPoints()){
+            bits ^= point.hashCode();
+        }
+        return bits;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            ArrayTabulatedFunction cloned = (ArrayTabulatedFunction) super.clone();
+            cloned.points = new FunctionPoint[this.getPointsCount()];
+            for (int i = 0; i < this.points.length; i++) {
+                cloned.points[i] = this.points[i].clone(); // Глубокое клонирование
+            }
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }
 
