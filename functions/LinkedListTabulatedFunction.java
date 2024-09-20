@@ -112,7 +112,11 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Externali
             }
         }
 
-        size = points.length;
+        head = new FunctionNode(); // Инициализация головы
+        head.setNext(head);        // Ссылка next на саму голову
+        head.setPrev(head);        // Ссылка prev на саму голову
+        size = 0;
+
 
         for (int i = 0; i < points.length; i++) {
             addNodeToTail(points[i]);
