@@ -268,7 +268,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
     }
 
     @Override
-    public Object clone() {
+    public ArrayTabulatedFunction clone() {
         try {
             ArrayTabulatedFunction cloned = (ArrayTabulatedFunction) super.clone();
             cloned.points = new FunctionPoint[this.getPointsCount()];

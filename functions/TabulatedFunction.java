@@ -3,7 +3,7 @@ package functions;
 import functions.exceptions.FunctionPointIndexOutOfBoundsException;
 import functions.exceptions.InappropriateFunctionPointException;
 
-public interface TabulatedFunction extends Function{
+public interface TabulatedFunction extends Function, Cloneable{
 
     public FunctionPoint[] getPoints();
 
@@ -32,5 +32,7 @@ public interface TabulatedFunction extends Function{
 
     // Метод для добавления точки
     public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException;
+
+    public TabulatedFunction clone();
 }
 

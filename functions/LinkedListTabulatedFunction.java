@@ -356,4 +356,92 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         size--;
         return nodeToDelete;
     }
+
+    @Override
+    public String toString(){
+        int size = getPointsCount();
+        String result = "{";
+
+        FunctionNode current = head.getNext();
+        for (int i=0; i<size; i++){
+            result += getPoint(i).toString();
+            if (i < size-1){
+                result+=", ";
+            }
+        }
+        result += "}";
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (this==obj){
+            return true;
+        }
+        if (!(obj instanceof TabulatedFunction)){
+            return false;
+        }
+        if (obj instanceof LinkedListTabulatedFunction){
+            LinkedListTabulatedFunction other = (LinkedListTabulatedFunction) obj;
+            if (this.getPointsCount() != other.getPointsCount()){
+                return false;
+            }
+            for (int i=0; i < this.getPointsCount(); i++){
+                if (!this.getPoint(i).equals(other.getPoint(i))){
+                    return false;
+                }
+            }
+            return true;
+        }
+        // Общий случай для других реализаций TabulatedFunction
+        TabulatedFunction other = (TabulatedFunction) obj;
+        if (this.getPointsCount() != other.getPointsCount()){
+            return false;
+        }
+        for (int i=0; i<this.getPointsCount(); i++){
+            if (!this.getPoint(i).equals(other.getPoint(i))){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode(){
+        int bits = getPointsCount();
+        for (FunctionPoint point : this.getPoints()){
+            bits ^= point.hashCode();
+        }
+        return bits;
+    }
+
+    @Override
+    public LinkedListTabulatedFunction clone() {
+        try {
+            LinkedListTabulatedFunction cloned = (LinkedListTabulatedFunction) super.clone();
+            cloned.head = new FunctionNode();
+            cloned.head.setNext(cloned.head);
+            cloned.head.setPrev(cloned.head);
+            cloned.size = 0;
+
+            FunctionNode current = this.head.getNext();
+            while (current!=this.head){
+                FunctionPoint clonedPoint = new FunctionPoint(current.getData().getX(), current.getData().getY());
+                FunctionNode newNode = new FunctionNode(clonedPoint);
+
+                FunctionNode tail = cloned.head.getPrev();
+                tail.setNext(newNode);
+                newNode.setPrev(tail);
+                newNode.setNext(cloned.head);
+                cloned.head.setPrev(newNode);
+
+                cloned.size++;
+
+                current = current.getNext();
+            }
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

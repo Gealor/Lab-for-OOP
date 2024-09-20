@@ -1,6 +1,6 @@
 package functions;
 
-public class FunctionPoint{
+public class FunctionPoint implements Cloneable{
     private double x;
     private double y;
 
@@ -37,7 +37,7 @@ public class FunctionPoint{
 
     @Override
     public String toString(){
-        return ('(' + getX() + "; " + getY() + ')');
+        return ("(" + getX() + "; " + getY() + ")");
     }
 
     @Override
