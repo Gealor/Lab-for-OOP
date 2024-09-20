@@ -3,7 +3,9 @@ package functions;
 import functions.exceptions.FunctionPointIndexOutOfBoundsException;
 import functions.exceptions.InappropriateFunctionPointException;
 
-public class ArrayTabulatedFunction implements TabulatedFunction {
+import java.io.Serializable;
+
+public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
     private FunctionPoint[] points;
 
     // Конструктор, создающий табулированную функцию с заданным количеством точек

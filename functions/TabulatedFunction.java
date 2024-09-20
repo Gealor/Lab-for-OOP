@@ -3,7 +3,7 @@ package functions;
 import functions.exceptions.FunctionPointIndexOutOfBoundsException;
 import functions.exceptions.InappropriateFunctionPointException;
 
-public interface TabulatedFunction extends Function{
+public interface TabulatedFunction extends Function {
 
     public FunctionPoint[] getPoints();
 
