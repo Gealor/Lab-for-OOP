@@ -1,6 +1,11 @@
 package functions;
 
-public class FunctionPoint{
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+public class FunctionPoint implements Externalizable {
     private double x;
     private double y;
 
@@ -33,5 +38,17 @@ public class FunctionPoint{
     public FunctionPoint(FunctionPoint point){
         this.x=point.getX();
         this.y=point.getY();
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeDouble(x);
+        out.writeDouble(y);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        x = (Double) in.readDouble();
+        y = (Double) in.readDouble();
     }
 }

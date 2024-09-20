@@ -3,8 +3,16 @@ package functions;
 import functions.exceptions.FunctionPointIndexOutOfBoundsException;
 import functions.exceptions.InappropriateFunctionPointException;
 
-public class ArrayTabulatedFunction implements TabulatedFunction {
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+public class ArrayTabulatedFunction implements TabulatedFunction, Externalizable {
     private FunctionPoint[] points;
+
+    // Конструктор по умолчанию(нужен для readExternal)
+    public ArrayTabulatedFunction() {}
 
     // Конструктор, создающий табулированную функцию с заданным количеством точек
     public ArrayTabulatedFunction(double leftX, double rightX, int pointsCount) {
@@ -209,6 +217,23 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
             i++;
         }
         this.points = newPoints;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeInt(points.length);
+        for (FunctionPoint point : points){
+            out.writeObject(point);
+        }
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        int lenght = in.readInt();
+        points = new FunctionPoint[lenght];
+        for (int i=0; i<lenght; i++){
+            points[i] = (FunctionPoint) in.readObject();
+        }
     }
 }
 

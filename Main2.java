@@ -115,6 +115,31 @@ public class Main2{
             e.printStackTrace();
         }
         System.out.println("End of tests");
+
+
+        // Externalizable на примере log(e)
+        System.out.println("\nExternalizable на примере log(e)");
+        TabulatedFunction lnFunction = TabulatedFunctions.tabulate(new Log(Math.E), 1, 10, 10);
+        // Сериализация объекта
+        try (FileOutputStream fileOut = new FileOutputStream("lnFunction.ser");
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(lnFunction);
+            System.out.println("Сериализация завершена.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Десериализация объекта
+        try (FileInputStream fileIn = new FileInputStream("lnFunction.ser");
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            TabulatedFunction deserializedLn = (ArrayTabulatedFunction) in.readObject();
+            System.out.println("Десериализация завершена.");
+            for (FunctionPoint point : deserializedLn.getPoints()){
+                System.out.println(point.getX() + " : " + point.getY());
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
