@@ -83,6 +83,14 @@ public class Main {
                 System.out.println(point.getX() + " : " + point.getY());
             }
             System.out.println("Count of dots: " + tf.getPointsCount());
+
+            // Конструктор по заданному кол-ву точек
+            System.out.println("\nConstructor with specified number of points");
+            FunctionPoint[] points = new FunctionPoint[] {new FunctionPoint(0, 1), new FunctionPoint(1, 2), new FunctionPoint(2,3)};
+            TabulatedFunction tf2 = new LinkedListTabulatedFunction(points);
+            for (FunctionPoint point : tf2.getPoints()){
+                System.out.println(point.getX() + " : " + point.getY());
+            }
         } catch (InappropriateFunctionPointException e) { System.out.println("Exception" + e); }
     }
 }
