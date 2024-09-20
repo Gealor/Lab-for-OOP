@@ -95,6 +95,30 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
         }
     }
 
+    public LinkedListTabulatedFunction(FunctionPoint[] points) {
+        if (points == null) {
+            throw new IllegalArgumentException("Points array cannot be null.");
+        }
+        if (points.length < 2) {
+            throw new IllegalArgumentException("There must be at least two points.");
+        }
+
+        for (int i = 1; i < points.length; i++) {
+            if (points[i-1].getX() >= points[i].getX()) {
+                throw new IllegalArgumentException("Points must be sorted by x-coordinate in ascending order.");
+            }
+        }
+
+        head = new FunctionNode(); // Инициализация головы
+        head.setNext(head);        // Ссылка next на саму голову
+        head.setPrev(head);        // Ссылка prev на саму голову
+        size = 0;
+
+        for (int i = 0; i < points.length; i++) {
+            addNodeToTail(points[i]);
+        }
+    }
+
     // Получение массива точек
     @Override
     public FunctionPoint[] getPoints() {

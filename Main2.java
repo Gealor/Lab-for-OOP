@@ -119,7 +119,6 @@ public class Main2{
 
         // Serializable на примере log(e)
         System.out.println("\nSerializable на примере log(e)");
-        Function logFunc = new Log(new Exp());
         TabulatedFunction lnFunction = TabulatedFunctions.tabulate(new Log(Math.E), 1, 10, 10);
         // Сериализация объекта
         try (FileOutputStream fileOut = new FileOutputStream("lnFunction.ser");
