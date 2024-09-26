@@ -24,7 +24,6 @@ public class Main4 {
         double tolerance = 1e-7;
         boolean isAccurate = false;
 
-
         while (!isAccurate){
             try {
                 computedValue = Functions.integrate(expFunction, left, right, step);
@@ -49,6 +48,6 @@ public class Main4 {
                 break;
             }
         }
-
+        System.out.println(Functions.integrate(expFunction, left, right, 0.0007812500));
     }
 }
