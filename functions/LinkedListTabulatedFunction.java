@@ -251,6 +251,9 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
             FunctionNode current = head.getNext();
             for (int i = 0; i < size; i++) {
                 if (current.getData().getX() >= point.getX()) {
+                    if (current.getData().getX() == point.getX()){
+                        throw new InappropriateFunctionPointException("Error");
+                    }
                     addNodeByIndex(i, point);
                     return;
                 }

@@ -36,7 +36,7 @@ public class Main {
             System.out.println("Count of dots: " + tf1.getPointsCount());
 
 
-            tf1.addPoint(new FunctionPoint(0,0));
+            tf1.addPoint(new FunctionPoint(1,0));
             for (FunctionPoint point : tf1.getPoints()){
                 System.out.println(point.getX() + " : " + point.getY());
             }
@@ -78,7 +78,7 @@ public class Main {
             System.out.println("Count of dots: " + tf.getPointsCount());
 
 
-            tf.addPoint(new FunctionPoint(0,0));
+            tf.addPoint(new FunctionPoint(1,0));
             for (FunctionPoint point : tf.getPoints()){
                 System.out.println(point.getX() + " : " + point.getY());
             }
