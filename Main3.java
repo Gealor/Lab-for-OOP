@@ -3,7 +3,7 @@ import functions.FunctionPoint;
 import functions.LinkedListTabulatedFunction;
 import functions.TabulatedFunction;
 import functions.exceptions.InappropriateFunctionPointException;
-import functions.exceptions.InappropriateFunctionPointException;
+
 
 public class Main3 {
     public static void main(String[] args) {
