@@ -203,6 +203,9 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
             newPoints[i] = points[i];
             i++;
         }
+        if (points[i].getX() == point.getX()){
+            throw new InappropriateFunctionPointException("The point at the given x coordinate is already present in the function.");
+        }
         newPoints[i] = point;
         while (i < points.length) {
             newPoints[i + 1] = points[i];
