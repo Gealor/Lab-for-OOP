@@ -252,7 +252,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
             for (int i = 0; i < size; i++) {
                 if (current.getData().getX() >= point.getX()) {
                     if (current.getData().getX() == point.getX()){
-                        throw new InappropriateFunctionPointException("Error");
+                        throw new InappropriateFunctionPointException("The point at the given x coordinate is already present in the function.");
                     }
                     addNodeByIndex(i, point);
                     return;
