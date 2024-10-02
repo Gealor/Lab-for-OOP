@@ -1,6 +1,7 @@
 import functions.Function;
 import functions.Functions;
 import functions.basic.Exp;
+import functions.basic.Log;
 import functions.exceptions.InappropriateFunctionPointException;
 import functions.Functions.*;
 
@@ -49,5 +50,7 @@ public class Main4 {
             }
         }
         System.out.println(Functions.integrate(expFunction, left, right, 0.0007812500));
+
+        System.out.println(Functions.integrate(new Log(8.844343025599969), 90.0350, 155.8817, 0.0118));
     }
 }

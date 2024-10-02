@@ -10,15 +10,6 @@ public class Task {
     private int taskCount;
 
     public Task(){
-
-    }
-
-    public Task(Function function, double leftBound, double rightBound, double step, int taskCount) {
-        this.function = function;
-        this.leftBound = leftBound;
-        this.rightBound = rightBound;
-        this.step = step;
-        this.taskCount = taskCount;
     }
 
     // Геттеры и сеттеры
