@@ -14,7 +14,7 @@ public class Main6 {
     public static void simpleThreads() {
         Random random = new Random();
         Task task = new Task();
-        int numberOfTasks = 100; // Минимум 100 заданий
+        int numberOfTasks = 10; // Минимум 100 заданий
         task.setTaskCount(numberOfTasks);
         // Инициализирую начальную функцию, чтобы избежать вылета ошибки в первой итерации, т.к в начале Function равно null и step=0.0
 // ------------------------------------------------------------------------------------------
