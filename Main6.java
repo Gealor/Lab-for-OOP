@@ -35,16 +35,16 @@ public class Main6 {
 // ------------------------------------------------------------------------------------------
 
         // Создание генератора и интегратора
-        SimpleGenerator generator = new SimpleGenerator(task);
-        SimpleIntegrator integrator = new SimpleIntegrator(task);
+        Runnable generator = new SimpleGenerator(task);
+        Runnable integrator = new SimpleIntegrator(task);
 
         // Создание потоков
         Thread generatorThread = new Thread(generator, "GeneratorThread");
         Thread integratorThread = new Thread(integrator, "IntegratorThread");
 
         // Установка приоритетов потоков (по желанию)
-        generatorThread.setPriority(Thread.MAX_PRIORITY);
-        integratorThread.setPriority(Thread.MIN_PRIORITY);
+        generatorThread.setPriority(Thread.NORM_PRIORITY);
+        integratorThread.setPriority(Thread.NORM_PRIORITY);
 
         // Запуск потоков
         generatorThread.start();

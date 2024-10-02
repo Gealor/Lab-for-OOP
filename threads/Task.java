@@ -8,49 +8,71 @@ public class Task {
     private double rightBound;
     private double step;
     private int taskCount;
+    private boolean isAvailable = false; // Флаг доступности задачи
+    private boolean isFinished = false;  // Флаг завершения генерации задач
 
     public Task(){
     }
 
     // Геттеры и сеттеры
 
-    public Function getFunction() {
+    public synchronized Function getFunction() {
         return function;
     }
 
-    public void setFunction(Function function) {
+    public synchronized void setFunction(Function function) {
         this.function = function;
     }
 
-    public double getLeftBound() {
+    public synchronized double getLeftBound() {
         return leftBound;
     }
 
-    public void setLeftBound(double leftBound) {
+    public synchronized void setLeftBound(double leftBound) {
         this.leftBound = leftBound;
     }
 
-    public double getRightBound() {
+    public synchronized double getRightBound() {
         return rightBound;
     }
 
-    public void setRightBound(double rightBound) {
+    public synchronized void setRightBound(double rightBound) {
         this.rightBound = rightBound;
     }
 
-    public double getStep() {
+    public synchronized double getStep() {
         return step;
     }
 
-    public void setStep(double step) {
+    public synchronized void setStep(double step) {
         this.step = step;
     }
 
-    public int getTaskCount() {
+    public synchronized int getTaskCount() {
         return taskCount;
     }
 
-    public void setTaskCount(int taskCount) {
+    public synchronized void setTaskCount(int taskCount) {
         this.taskCount = taskCount;
+    }
+
+    // Геттер и сеттер для флага isAvailable
+
+    public synchronized boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public synchronized void setAvailable(boolean available) {
+        this.isAvailable = available;
+    }
+
+    // Геттер и сеттер для флага isFinished
+
+    public synchronized boolean isFinished() {
+        return isFinished;
+    }
+
+    public synchronized void setFinished(boolean finished) {
+        this.isFinished = finished;
     }
 }
