@@ -8,8 +8,7 @@ public class Task {
     private double rightBound;
     private double step;
     private int taskCount;
-    private boolean isAvailable = false; // Флаг доступности задачи
-    private boolean isFinished = false;  // Флаг завершения генерации задач
+
 
     public Task(){
     }
@@ -54,25 +53,5 @@ public class Task {
 
     public synchronized void setTaskCount(int taskCount) {
         this.taskCount = taskCount;
-    }
-
-    // Геттер и сеттер для флага isAvailable
-
-    public synchronized boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public synchronized void setAvailable(boolean available) {
-        this.isAvailable = available;
-    }
-
-    // Геттер и сеттер для флага isFinished
-
-    public synchronized boolean isFinished() {
-        return isFinished;
-    }
-
-    public synchronized void setFinished(boolean finished) {
-        this.isFinished = finished;
     }
 }

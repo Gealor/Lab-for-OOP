@@ -14,7 +14,7 @@ public class Main7 {
         Task task = new Task();
         task.setTaskCount(numberOfTasks);
 
-        Semaphore semaphore = new Semaphore(1);
+        Semaphore semaphore = new Semaphore(1, true);
 
         // Создание и настройка потоков
         Generator generator = new Generator(task, semaphore);
