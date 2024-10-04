@@ -2,7 +2,33 @@ package functions;
 
 import java.io.*;
 
-public final class TabulatedFunctions {
+public final class TabulatedFunctions implements TabulatedFunctionFactory{
+
+    private static TabulatedFunctionFactory factory = new ArrayTabulatedFunction.ArrayTabulatedFunctionFactory();
+
+    public static void setTabulatedFunctionFactory(TabulatedFunctionFactory newFactory) {
+        if (newFactory == null) {
+            throw new IllegalArgumentException("The factory can't be null.");
+        }
+        factory = newFactory;
+    }
+
+
+    @Override
+    public TabulatedFunction createTabulatedFunction(double left, double right, int pointsCount){
+        return factory.createTabulatedFunction(left, right, pointsCount);
+    }
+
+    @Override
+    public TabulatedFunction createTabulatedFunction(double left, double right, double[] points){
+        return factory.createTabulatedFunction(left, right, points);
+    };
+
+    @Override
+    public TabulatedFunction createTabulatedFunction(FunctionPoint[] points){
+        return factory.createTabulatedFunction(points);
+    }
+
 
     // Приватный конструктор предотвращает создание экземпляров класса
     private TabulatedFunctions() {
@@ -30,7 +56,7 @@ public final class TabulatedFunctions {
         }
 
         // Предполагаем, что ArrayTabulatedFunction - это класс, реализующий TabulatedFunction
-        return new ArrayTabulatedFunction(arrayPoints);
+        return factory.createTabulatedFunction(arrayPoints);
     }
 
     public static void outputTabulatedFunction(TabulatedFunction function, OutputStream out) throws IOException {
@@ -53,7 +79,7 @@ public final class TabulatedFunctions {
                 double y = dataIn.readDouble();
                 arrayPoints[i] = new FunctionPoint(x, y);
             }
-            return new ArrayTabulatedFunction(arrayPoints);
+            return factory.createTabulatedFunction(arrayPoints);
         }
     }
 
@@ -85,6 +111,6 @@ public final class TabulatedFunctions {
             double y = tokenizer.nval;
             arrayPoints[i] = new FunctionPoint(x, y);
         }
-        return new ArrayTabulatedFunction(arrayPoints);
+        return factory.createTabulatedFunction(arrayPoints);
     }
 }

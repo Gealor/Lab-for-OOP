@@ -9,9 +9,6 @@ import java.util.NoSuchElementException;
 public class ArrayTabulatedFunction implements TabulatedFunction {
     private FunctionPoint[] points;
 
-    public ArrayTabulatedFunction() {
-
-    }
     // Конструктор, создающий табулированную функцию с заданным количеством точек
     public ArrayTabulatedFunction(double leftX, double rightX, int pointsCount) {
         if (pointsCount < 2 || leftX >= rightX) {
@@ -317,6 +314,23 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
                 throw new UnsupportedOperationException("Deleting an item is not supported.");
             }
         };
+    }
+
+    public static class ArrayTabulatedFunctionFactory implements TabulatedFunctionFactory{
+        @Override
+        public TabulatedFunction createTabulatedFunction(double left, double right, int pointsCount){
+            return new ArrayTabulatedFunction(left, right, pointsCount);
+        }
+
+        @Override
+        public TabulatedFunction createTabulatedFunction(double left, double right, double[] points){
+            return new ArrayTabulatedFunction(left, right, points);
+        };
+
+        @Override
+        public TabulatedFunction createTabulatedFunction(FunctionPoint[] points){
+            return new ArrayTabulatedFunction(points);
+        }
     }
 }
 

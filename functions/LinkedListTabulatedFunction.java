@@ -477,4 +477,21 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
             }
         };
     }
+
+    public static class LinkedListTabulatedFunctionFactory implements TabulatedFunctionFactory{
+        @Override
+        public TabulatedFunction createTabulatedFunction(double left, double right, int pointsCount){
+            return new LinkedListTabulatedFunction(left, right, pointsCount);
+        }
+
+        @Override
+        public TabulatedFunction createTabulatedFunction(double left, double right, double[] points){
+            return new LinkedListTabulatedFunction(left, right, points);
+        };
+
+        @Override
+        public TabulatedFunction createTabulatedFunction(FunctionPoint[] points){
+            return new LinkedListTabulatedFunction(points);
+        }
+    }
 }
