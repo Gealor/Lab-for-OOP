@@ -45,13 +45,6 @@ public class SimpleGenerator implements Runnable {
                     throw new RuntimeException(e);
                 }
             }
-//            try {
-//                Thread.sleep(50);
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//                System.out.println("Generator interrupted during sleep.");
-//                return;
-//            }
         }
     }
 }
