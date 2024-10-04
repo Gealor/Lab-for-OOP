@@ -38,6 +38,7 @@ public class Main7 {
         // Прерывание потоков
         generator.interrupt();
         integrator.interrupt();
+        System.out.println("The threads were interrupted 50 milliseconds after startup");
 
         // Ожидание завершения потоков
         try {

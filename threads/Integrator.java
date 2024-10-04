@@ -16,44 +16,45 @@ public class Integrator extends Thread{
 
     @Override
     public void run() {
-        for (int i = 0; i < task.getTaskCount(); i++) {
-            try {
-                // Запрашиваем доступ к семафору для чтения
+        try {
+            while (true) {
+                // Ожидание доступной задачи
                 semaphore.acquire();
 
-//                // Проверка на завершение генерации
-//                if (task.isFinished()) {
-//                    semaphore.release();
-//                    break;
-//                }
-
-                // Чтение данных из объекта Task
-                Function currentFunction = task.getFunction();
-                double left = task.getLeftBound();
-                double right = task.getRightBound();
-                double step = task.getStep();
-
-                // Освобождаем семафор после чтения
-                semaphore.release();
-
-                // Проверка на наличие функции
-                if (currentFunction == null) {
-                    System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, Double.NaN);
-                    continue;
+                // Проверка прерывания после пробуждения
+                if (Thread.currentThread().isInterrupted()) {
+                    System.out.println("Integrator: Прерывание выполнено. Завершение работы.");
+                    break;
                 }
 
-                // Вычисление интеграла
-                double result = Functions.integrate(currentFunction, left, right, step);
+                // Проверка окончания генерации и отсутствия доступных задач
+                if (task.isFinished() && !task.isAvailable()) {
+                    System.out.println("Integrator: Завершение работы, все задачи обработаны.");
+                    break;
+                }
 
-                // Вывод результата в консоль
-                System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
+                // Проверка, доступна ли новая задача
+                if (task.isAvailable()) {
+                    // Получение данных задачи
+                    Function func = task.getFunction();
+                    double left = task.getLeftBound();
+                    double right = task.getRightBound();
+                    double step = task.getStep();
 
-            } catch (InterruptedException e) {
-                System.out.println("Integrator interrupted");
-                Thread.currentThread().interrupt();
-                break;
+                    // Пометка задачи как обработанной
+                    task.setAvailable(false);
+
+                    // Обработка задачи вне синхронизированного блока
+                    double result = Functions.integrate(func, left, right, step);
+
+                    // Вывод результата в консоль
+                    System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
+                }
             }
-
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (Exception e) {
+            System.out.println("Integrator: " + e.getMessage());
         }
     }
 }
