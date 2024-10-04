@@ -33,8 +33,8 @@ public class SimpleIntegrator implements Runnable {
                 System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
 
                 try{
-                    task.notify();
-                    task.wait();
+                    task.notify(); // Поток Интегратор уведомляет Генератор(другой поток), тем самым передавая ему управление
+                    task.wait(); // Интегратор ожидает уведомление от Генератора
                 } catch (InterruptedException e){
                     throw new RuntimeException(e);
                 }

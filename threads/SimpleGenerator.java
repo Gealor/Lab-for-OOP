@@ -38,8 +38,8 @@ public class SimpleGenerator implements Runnable {
 
                 // Уведомляю все потоки о новой задаче
                 try{
-                    task.wait();
-                    task.notify();
+                    task.wait(); // Генератор переходит в режим ожидания, тем самым освобождая объект Task, пока Интегратор(другой поток) не уведомит его с помощью notify
+                    task.notify(); // Уведомляет Интегратор, тем самым управление переходит этому потоку
                 } catch (InterruptedException e){
                     throw new RuntimeException(e);
                 }
