@@ -3,7 +3,9 @@ package functions;
 import functions.exceptions.FunctionPointIndexOutOfBoundsException;
 import functions.exceptions.InappropriateFunctionPointException;
 
-public interface TabulatedFunction extends Function, Cloneable{
+import java.util.Iterator;
+
+public interface TabulatedFunction extends Function,Iterable<FunctionPoint>, Cloneable{
 
     public FunctionPoint[] getPoints();
 
@@ -34,5 +36,9 @@ public interface TabulatedFunction extends Function, Cloneable{
     public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException;
 
     public TabulatedFunction clone();
+
+    // Метод для получения итератора
+    @Override
+    public Iterator<FunctionPoint> iterator();
 }
 

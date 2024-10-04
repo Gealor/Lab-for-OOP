@@ -3,9 +3,15 @@ package functions;
 import functions.exceptions.FunctionPointIndexOutOfBoundsException;
 import functions.exceptions.InappropriateFunctionPointException;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class ArrayTabulatedFunction implements TabulatedFunction {
     private FunctionPoint[] points;
 
+    public ArrayTabulatedFunction() {
+
+    }
     // Конструктор, создающий табулированную функцию с заданным количеством точек
     public ArrayTabulatedFunction(double leftX, double rightX, int pointsCount) {
         if (pointsCount < 2 || leftX >= rightX) {
@@ -282,6 +288,35 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+
+    @Override
+    public Iterator<FunctionPoint> iterator() {
+        return new Iterator<FunctionPoint>() {
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < getPointsCount();
+            }
+
+            @Override
+            public FunctionPoint next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("There is no next element.");
+                }
+                // Возвращаю копию функции точки для защиты инкапсуляции
+//                FunctionPoint original = points[currentIndex++];
+                FunctionPoint original = getPoint(currentIndex++);
+                return new FunctionPoint(original.getX(), original.getY());
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Deleting an item is not supported.");
+            }
+        };
     }
 }
 

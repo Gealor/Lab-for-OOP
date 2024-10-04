@@ -3,6 +3,9 @@ package functions;
 import functions.exceptions.FunctionPointIndexOutOfBoundsException;
 import functions.exceptions.InappropriateFunctionPointException;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class LinkedListTabulatedFunction implements TabulatedFunction {
     // Описываю этот класс как вложенный в LinkedListTabulatedFunction, чтобы обеспечить прямой доступ к элементам связного списка
     // но при этом обеспечить высокий уровень инкапсуляции, делая его недоступным из внешних классов
@@ -446,5 +449,32 @@ public class LinkedListTabulatedFunction implements TabulatedFunction {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    @Override
+    public Iterator<FunctionPoint> iterator() {
+        return new Iterator<FunctionPoint>() {
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < getPointsCount();
+            }
+
+            @Override
+            public FunctionPoint next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("There is no next element.");
+                }
+                // Возвращаю копию функции точки для защиты инкапсуляции
+                FunctionPoint original = getPoint(currentIndex++);
+                return new FunctionPoint(original.getX(), original.getY());
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Deleting an item is not supported.");
+            }
+        };
     }
 }
