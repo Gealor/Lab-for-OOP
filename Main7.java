@@ -40,13 +40,6 @@ public class Main7 {
         integrator.interrupt();
         System.out.println("The threads were interrupted 50 milliseconds after startup");
 
-        // Ожидание завершения потоков
-        try {
-            generator.join();
-            integrator.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         System.out.println("Main thread finished.");
     }

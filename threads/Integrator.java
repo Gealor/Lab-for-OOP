@@ -20,7 +20,6 @@ public class Integrator extends Thread{
             for (int i = 0; i < task.getTaskCount(); i++) {
                 semaphore.acquire();
 
-                // Проверка, доступна ли новая задача
                 // Получение данных задачи
                 Function func = task.getFunction();
                 double left = task.getLeftBound();
@@ -28,8 +27,13 @@ public class Integrator extends Thread{
                 double step = task.getStep();
 
 
-                // Обработка задачи вне синхронизированного блока
-                double result = Functions.integrate(func, left, right, step);
+                // Обработка задачи
+                double result;
+                if (func == null) {
+                    result = Double.NaN;
+                } else {
+                    result = Functions.integrate(func, left, right, step);
+                }
 
                 // Вывод результата в консоль
                 System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);

@@ -16,9 +16,8 @@ public class SimpleGenerator implements Runnable {
     public void run() {
         Random random = new Random();
         int taskCount = task.getTaskCount();
-
-        for (int i = 0; i < taskCount; i++) {
-            synchronized (task) {
+        synchronized (task) {
+            for (int i = 0; i < taskCount; i++) {
                 // Генерация случайного основания для логарифма [2.0, 10.0)
                 double base = 2.0 + 8.0 * random.nextDouble();
                 Function logFunction = new Log(base);
@@ -45,13 +44,6 @@ public class SimpleGenerator implements Runnable {
                     throw new RuntimeException(e);
                 }
             }
-//            try {
-//                Thread.sleep(50);
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//                System.out.println("Generator interrupted during sleep.");
-//                return;
-//            }
         }
     }
 }

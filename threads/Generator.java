@@ -19,7 +19,6 @@ public class Generator extends Thread {
         try {
             Random random = new Random();
             int totalTasks = task.getTaskCount();
-
             for (int i = 0; i < totalTasks; i++) {
                 semaphore.acquire();
 
@@ -28,7 +27,7 @@ public class Generator extends Thread {
                 Function logFunction = new Log(base);
                 double left = 100.0 * random.nextDouble();
                 double right = left + 100.0 * random.nextDouble();
-                double step = 0.1 + random.nextDouble(); // Минимальный шаг 0.1 для избежания бесконечного цикла
+                double step = random.nextDouble(); // Минимальный шаг 0.1 для избежания бесконечного цикла
 
                 // Подготовка задачи
                 task.setFunction(logFunction);
