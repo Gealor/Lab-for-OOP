@@ -21,17 +21,13 @@ public class Generator extends Thread {
             int totalTasks = task.getTaskCount();
 
             for (int i = 0; i < totalTasks; i++) {
-                // Проверка на прерывание
-                if (Thread.currentThread().isInterrupted()) {
-                    System.out.println("Generator: Прерывание выполнено. Завершение работы.");
-                    break;
-                }
+                semaphore.acquire();
 
                 // Генерация функции и параметров задачи
                 double base = 2.0 + 8.0 * random.nextDouble();
                 Function logFunction = new Log(base);
                 double left = 100.0 * random.nextDouble();
-                double right = left + 100.0 * random.nextDouble(); // Обеспечиваем, что right > left
+                double right = left + 100.0 * random.nextDouble();
                 double step = 0.1 + random.nextDouble(); // Минимальный шаг 0.1 для избежания бесконечного цикла
 
                 // Подготовка задачи
@@ -39,21 +35,13 @@ public class Generator extends Thread {
                 task.setLeftBound(left);
                 task.setRightBound(right);
                 task.setStep(step);
-                task.setAvailable(true);
 
                 // Вывод сообщения в консоль
                 System.out.printf("%d. Source: %.4f %.4f %.4f%n", i, left, right, step);
 
                 // Освобождение семафора для Integrator
                 semaphore.release();
-                Thread.sleep(10);
             }
-
-            // Установка флага завершения генерации
-            task.setFinished(true);
-
-            // Освобождение семафора для Integrator на случай, если Integrator ждет
-            semaphore.release();
         } catch (Exception e) {
             if (Thread.currentThread().isInterrupted()) {
                 System.out.println("Generator: Прерывание во время генерации задач.");

@@ -19,17 +19,6 @@ public class SimpleGenerator implements Runnable {
 
         for (int i = 0; i < taskCount; i++) {
             synchronized (task) {
-                // Жду, пока предыдущая задача будет обработана
-                while (task.isAvailable()) {
-                    try {
-                        task.wait();
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        System.out.println("Generator interrupted while waiting.");
-                        return;
-                    }
-                }
-
                 // Генерация случайного основания для логарифма [2.0, 10.0)
                 double base = 2.0 + 8.0 * random.nextDouble();
                 Function logFunction = new Log(base);
@@ -45,29 +34,25 @@ public class SimpleGenerator implements Runnable {
                 double step = random.nextDouble();
                 task.setStep(step);
 
-                // Устанавливаю флаг доступности задачи
-                task.setAvailable(true);
 
                 // Вывод сообщения в консоль
                 System.out.printf("%d. Source: %.4f %.4f %.4f%n", i, left, right, step);
 
                 // Уведомляю все потоки о новой задаче
-                task.notifyAll();
+                try{
+                    task.wait();
+                    task.notify();
+                } catch (InterruptedException e){
+                    throw new RuntimeException(e);
+                }
             }
-
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Generator interrupted during sleep.");
-                return;
-            }
-        }
-
-        // После создания всех задач, устанавливаю флаг завершения и уведомляю все потоки
-        synchronized (task) {
-            task.setFinished(true);
-            task.notifyAll();
+//            try {
+//                Thread.sleep(50);
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//                System.out.println("Generator interrupted during sleep.");
+//                return;
+//            }
         }
     }
 }

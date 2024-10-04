@@ -14,7 +14,7 @@ public class Main7 {
         Task task = new Task();
         task.setTaskCount(numberOfTasks);
 
-        Semaphore semaphore = new Semaphore(1);
+        Semaphore semaphore = new Semaphore(1, true);
 
         // Создание и настройка потоков
         Generator generator = new Generator(task, semaphore);
@@ -40,13 +40,6 @@ public class Main7 {
         integrator.interrupt();
         System.out.println("The threads were interrupted 50 milliseconds after startup");
 
-        // Ожидание завершения потоков
-        try {
-            generator.join();
-            integrator.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         System.out.println("Main thread finished.");
     }

@@ -17,39 +17,28 @@ public class Integrator extends Thread{
     @Override
     public void run() {
         try {
-            while (true) {
-                // Ожидание доступной задачи
+            for (int i = 0; i < task.getTaskCount(); i++) {
                 semaphore.acquire();
 
-                // Проверка прерывания после пробуждения
-                if (Thread.currentThread().isInterrupted()) {
-                    System.out.println("Integrator: Прерывание выполнено. Завершение работы.");
-                    break;
-                }
-
-                // Проверка окончания генерации и отсутствия доступных задач
-                if (task.isFinished() && !task.isAvailable()) {
-                    System.out.println("Integrator: Завершение работы, все задачи обработаны.");
-                    break;
-                }
-
                 // Проверка, доступна ли новая задача
-                if (task.isAvailable()) {
-                    // Получение данных задачи
-                    Function func = task.getFunction();
-                    double left = task.getLeftBound();
-                    double right = task.getRightBound();
-                    double step = task.getStep();
+                // Получение данных задачи
+                Function func = task.getFunction();
+                double left = task.getLeftBound();
+                double right = task.getRightBound();
+                double step = task.getStep();
 
-                    // Пометка задачи как обработанной
-                    task.setAvailable(false);
 
-                    // Обработка задачи вне синхронизированного блока
-                    double result = Functions.integrate(func, left, right, step);
-
-                    // Вывод результата в консоль
-                    System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
+                // Обработка задачи
+                double result;
+                if (func == null) {
+                    result = Double.NaN;
+                } else {
+                    result = Functions.integrate(func, left, right, step);
                 }
+                // Вывод результата в консоль
+                System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
+
+                semaphore.release();
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
