@@ -28,21 +28,16 @@ public class SimpleIntegrator implements Runnable {
                 // Вычисление интеграла
                 double result;
                 result = Functions.integrate(currentFunction, left, right, step);
-//                double result;
-//                try {
-//                    result = Functions.integrate(currentFunction, left, right, step);
-//                } catch (IllegalArgumentException e) {
-//                    System.out.println("Integrator Error: " + e.getMessage());
-//                    continue; // Переход к следующей задаче
-//                }
 
                 // Вывод результата в консоль
                 System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
-            }
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e){
-                System.out.println(e.getMessage());
+
+                try{
+                    task.notify();
+                    task.wait();
+                } catch (InterruptedException e){
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

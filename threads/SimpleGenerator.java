@@ -34,11 +34,13 @@ public class SimpleGenerator implements Runnable{
 
                 // Вывод сообщения в консоль
                 System.out.printf("%d. Source: %.4f %.4f %.4f%n", i, left, right, step);
-            }
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e){
-                System.out.println(e.getMessage());
+
+                try{
+                    task.wait();
+                    task.notify();
+                } catch (InterruptedException e){
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
