@@ -22,8 +22,8 @@ public class Main7 {
 
 
         // Например, генератор имеет высокий приоритет, интегратор – низкий
-        generator.setPriority(Thread.NORM_PRIORITY);
-        integrator.setPriority(Thread.NORM_PRIORITY);
+        generator.setPriority(Thread.MAX_PRIORITY);
+        integrator.setPriority(Thread.MIN_PRIORITY);
 
         // Запуск потоков
         generator.start();

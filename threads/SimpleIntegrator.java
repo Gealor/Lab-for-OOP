@@ -12,8 +12,8 @@ public class SimpleIntegrator implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i < task.getTaskCount(); i++){
-            synchronized (task) {
+        synchronized (task) {
+            for (int i = 0; i < task.getTaskCount(); i++){
                 // Получаем данные задачи
                 Function currentFunction = task.getFunction();
                 double left = task.getLeftBound();
@@ -38,14 +38,6 @@ public class SimpleIntegrator implements Runnable {
                 } catch (InterruptedException e){
                     throw new RuntimeException(e);
                 }
-            }
-
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Integrator interrupted during sleep.");
-                return;
             }
         }
     }
