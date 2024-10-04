@@ -37,10 +37,9 @@ public class SimpleGenerator implements Runnable {
                 // Вывод сообщения в консоль
                 System.out.printf("%d. Source: %.4f %.4f %.4f%n", i, left, right, step);
 
-                // Уведомляю все потоки о новой задаче
                 try{
-                    task.wait();
-                    task.notify();
+                    task.wait(); // Поток Generator начинает ожидать завершения Интегратора, тем самым освобождая объект Task, а ниже
+                    task.notify(); // уведомляет поток Интегратор, Генератор уведомляет о готовности создания следующей задачи.(пробуждает Интегратор)
                 } catch (InterruptedException e){
                     throw new RuntimeException(e);
                 }
