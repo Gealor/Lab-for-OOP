@@ -20,8 +20,8 @@ public class Main7 {
         Generator generator = new Generator(task, semaphore);
         Integrator integrator = new Integrator(task, semaphore);
 
-        generator.setPriority(Thread.NORM_PRIORITY);
-        integrator.setPriority(Thread.NORM_PRIORITY);
+        generator.setPriority(Thread.MAX_PRIORITY);
+        integrator.setPriority(Thread.MIN_PRIORITY);
 
         // Запуск потоков
         generator.start();

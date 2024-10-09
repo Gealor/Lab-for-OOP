@@ -16,8 +16,8 @@ public class Main6 {
         Task task = new Task();
         int numberOfTasks = 10; // Минимум 100 заданий
         task.setTaskCount(numberOfTasks);
+        // Генерация начального объекта Task, чтобы избежать NullPointerException(либо установить для Генератора максимальный приоритет, а для Интегратора минимальный)
 // ------------------------------------------------------------------
-        // Генерация начального объекта Task, чтобы избежать NullPointerException
         // Генерация случайного основания для логарифма [2.0, 10.0)
         double base = 2.0 + 8.0 * random.nextDouble();
         Function logFunction = new Log(base);
@@ -43,8 +43,8 @@ public class Main6 {
         Thread integratorThread = new Thread(integrator, "IntegratorThread");
 
         // Установка приоритетов потоков (по желанию)
-        generatorThread.setPriority(Thread.NORM_PRIORITY);
-        integratorThread.setPriority(Thread.NORM_PRIORITY);
+        generatorThread.setPriority(Thread.MAX_PRIORITY);
+        integratorThread.setPriority(Thread.MIN_PRIORITY);
 
         // Запуск потоков
         generatorThread.start();
