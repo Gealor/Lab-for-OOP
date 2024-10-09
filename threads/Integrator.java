@@ -31,12 +31,15 @@ public class Integrator extends Thread{
                 double result;
                 if (func == null) {
                     result = Double.NaN;
+                    // Вывод результата в консоль
+                    System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
                 } else {
                     result = Functions.integrate(func, left, right, step);
+                    // Вывод результата в консоль
+                    System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
                 }
 
-                // Вывод результата в консоль
-                System.out.printf("Result: %.4f %.4f %.4f %.4f%n", left, right, step, result);
+
 
                 semaphore.release();
             }
