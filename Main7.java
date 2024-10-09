@@ -20,8 +20,6 @@ public class Main7 {
         Generator generator = new Generator(task, semaphore);
         Integrator integrator = new Integrator(task, semaphore);
 
-
-        // Например, генератор имеет высокий приоритет, интегратор – низкий
         generator.setPriority(Thread.NORM_PRIORITY);
         integrator.setPriority(Thread.NORM_PRIORITY);
 

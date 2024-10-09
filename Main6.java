@@ -26,8 +26,8 @@ public class Main6 {
         Thread integratorThread = new Thread(integrator, "IntegratorThread");
 
         // Установка приоритетов потоков (по желанию)
-        generatorThread.setPriority(Thread.NORM_PRIORITY);
-        integratorThread.setPriority(Thread.NORM_PRIORITY);
+        generatorThread.setPriority(Thread.MAX_PRIORITY);
+        integratorThread.setPriority(Thread.MIN_PRIORITY);
 
         // Запуск потоков
         generatorThread.start();
