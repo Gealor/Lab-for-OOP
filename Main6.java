@@ -17,22 +17,7 @@ public class Main6 {
         int numberOfTasks = 100; // Минимум 100 заданий
         task.setTaskCount(numberOfTasks);
         // Инициализирую начальную функцию, чтобы избежать вылета ошибки в первой итерации, т.к в начале Function равно null и step=0.0
-// ------------------------------------------------------------------------------------------
-//        // Генерация случайного основания для логарифма [2.0, 10.0)
-//        double base = 2.0 + 8.0 * random.nextDouble();
-//        Function logFunction = new Log(base);
-//        task.setFunction(logFunction);
-//
-//        // Генерация случайных границ и шага
-//        double left = 100.0 * random.nextDouble(); // [0, 100)
-//        task.setLeftBound(left);
-//
-//        double right = 100.0 + 100.0 * random.nextDouble(); // [100, 200)
-//        task.setRightBound(right);
-//
-//        double step = random.nextDouble();
-//        task.setStep(step);
-// ------------------------------------------------------------------------------------------
+
 
         // Создание генератора и интегратора
         SimpleGenerator generator = new SimpleGenerator(task);
