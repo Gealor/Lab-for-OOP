@@ -10,7 +10,7 @@ public class Main7 {
     }
 
     public static void complicatedThreads(){
-        int numberOfTasks = 10;
+        int numberOfTasks = 100;
         Task task = new Task();
         task.setTaskCount(numberOfTasks);
 
