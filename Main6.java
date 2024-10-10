@@ -14,7 +14,7 @@ public class Main6 {
     public static void simpleThreads() {
         Random random = new Random();
         Task task = new Task();
-        int numberOfTasks = 10; // Минимум 100 заданий
+        int numberOfTasks = 100; // Минимум 100 заданий
         task.setTaskCount(numberOfTasks);
         // Генерация начального объекта Task, чтобы избежать NullPointerException(либо установить для Генератора максимальный приоритет, а для Интегратора минимальный)
 // ------------------------------------------------------------------

@@ -27,7 +27,7 @@ public class Generator extends Thread {
                 Function logFunction = new Log(base);
                 double left = 100.0 * random.nextDouble();
                 double right = left + 100.0 * random.nextDouble();
-                double step = random.nextDouble(); // Минимальный шаг 0.1 для избежания бесконечного цикла
+                double step = random.nextDouble();
 
                 // Подготовка задачи
                 task.setFunction(logFunction);
