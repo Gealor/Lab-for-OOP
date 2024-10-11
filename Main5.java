@@ -33,13 +33,6 @@ public class Main5 {
             task.setRightBound(right);
 
             // 4) Указать в объекте задания шаг дискретизации [0,1)
-
-            // Чтобы избежать шага, равного 0, устанавливаем шаг в диапазоне (1e-6,1], т.е генерирую значения до тех пор,
-            // пока не сгенерируется число >0.0
-//            double step;
-//            do {
-//                step = random.nextDouble(); // (0,1)
-//            } while (step <= 0.0);
             double step = random.nextDouble();
             task.setStep(step);
 
