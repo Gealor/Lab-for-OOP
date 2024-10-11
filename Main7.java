@@ -37,8 +37,6 @@ public class Main7 {
         generator.interrupt();
         integrator.interrupt();
         System.out.println("The threads were interrupted 50 milliseconds after startup");
-
-
         System.out.println("Main thread finished.");
     }
 }
