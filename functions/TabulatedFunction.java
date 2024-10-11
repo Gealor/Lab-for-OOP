@@ -5,7 +5,7 @@ import functions.exceptions.InappropriateFunctionPointException;
 
 import java.util.Iterator;
 
-public interface TabulatedFunction extends Function,Iterable<FunctionPoint>, Cloneable{
+public interface TabulatedFunction extends Function, Iterable<FunctionPoint>, Cloneable{
 
     public FunctionPoint[] getPoints();
 
